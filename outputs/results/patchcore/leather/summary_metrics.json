@@ -1,0 +1,55 @@
+{
+  "model": "patchcore",
+  "category": "leather",
+  "n_test_images": 124,
+  "hyperparameters": {
+    "gaussian_sigma": 4.0,
+    "top_k_frac": 0.005,
+    "val_percentile": 99.0,
+    "val_ratio": 0.2
+  },
+  "image_level_roc_auc": 0.9955842391304348,
+  "image_level_average_precision": 0.9986276719499785,
+  "pixel_level_roc_auc": 0.9874786621355944,
+  "pixel_level_aupro": 0.9468671095216826,
+  "validation_threshold": 10.405492858886719,
+  "precision": 0.8761904761904762,
+  "recall": 1.0,
+  "f1_score": 0.934010152284264,
+  "confusion_matrix": {
+    "labels": [
+      "normal",
+      "anomalous"
+    ],
+    "matrix": [
+      [
+        19,
+        13
+      ],
+      [
+        0,
+        92
+      ]
+    ]
+  },
+  "oracle_threshold": 11.938200950622559,
+  "oracle_precision": 1.0,
+  "oracle_recall": 0.9782608695652174,
+  "oracle_f1_score": 0.989010989010989,
+  "oracle_confusion_matrix": {
+    "labels": [
+      "normal",
+      "anomalous"
+    ],
+    "matrix": [
+      [
+        32,
+        0
+      ],
+      [
+        2,
+        90
+      ]
+    ]
+  }
+}

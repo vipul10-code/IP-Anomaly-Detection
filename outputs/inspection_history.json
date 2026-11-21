@@ -1,0 +1,192 @@
+[
+  {
+    "timestamp": "2026-11-21 14:04:30",
+    "filename": "001.png",
+    "model": "PATCHCORE",
+    "category": "leather",
+    "score": 16.54762,
+    "threshold": 10.40549,
+    "verdict": "DEFECT",
+    "latency_ms": 143.22
+  },
+  {
+    "timestamp": "2026-11-21 14:04:01",
+    "filename": "018.png",
+    "model": "PATCHCORE",
+    "category": "transistor",
+    "score": 12.76938,
+    "threshold": 13.76936,
+    "verdict": "NORMAL",
+    "latency_ms": 155.29
+  },
+  {
+    "timestamp": "2026-11-21 14:04:00",
+    "filename": "018.png",
+    "model": "PATCHCORE",
+    "category": "transistor",
+    "score": 12.76938,
+    "threshold": 13.76936,
+    "verdict": "NORMAL",
+    "latency_ms": 144.04
+  },
+  {
+    "timestamp": "2026-11-21 14:03:40",
+    "filename": "001.png",
+    "model": "PATCHCORE",
+    "category": "transistor",
+    "score": 17.83849,
+    "threshold": 13.76936,
+    "verdict": "DEFECT",
+    "latency_ms": 1118.02
+  },
+  {
+    "timestamp": "2026-11-21 14:02:56",
+    "filename": "010.png",
+    "model": "CAE",
+    "category": "leather",
+    "score": 0.35755,
+    "threshold": 0.30781,
+    "verdict": "DEFECT",
+    "latency_ms": 102.02
+  },
+  {
+    "timestamp": "2026-11-21 14:02:49",
+    "filename": "010.png",
+    "model": "EFFICIENTAD",
+    "category": "leather",
+    "score": 1.6566,
+    "threshold": 0.23828,
+    "verdict": "DEFECT",
+    "latency_ms": 68.96
+  },
+  {
+    "timestamp": "2026-11-21 14:02:19",
+    "filename": "010.png",
+    "model": "DRAEM",
+    "category": "leather",
+    "score": 0.30653,
+    "threshold": 0.3318,
+    "verdict": "NORMAL",
+    "latency_ms": 116.94
+  },
+  {
+    "timestamp": "2026-11-21 14:02:14",
+    "filename": "010.png",
+    "model": "CAE",
+    "category": "leather",
+    "score": 0.35755,
+    "threshold": 0.30781,
+    "verdict": "DEFECT",
+    "latency_ms": 98.0
+  },
+  {
+    "timestamp": "2026-11-21 14:02:08",
+    "filename": "010.png",
+    "model": "EFFICIENTAD",
+    "category": "leather",
+    "score": 1.6566,
+    "threshold": 0.23828,
+    "verdict": "DEFECT",
+    "latency_ms": 66.23
+  },
+  {
+    "timestamp": "2026-11-21 14:02:01",
+    "filename": "010.png",
+    "model": "PATCHCORE",
+    "category": "leather",
+    "score": 9.95136,
+    "threshold": 10.40549,
+    "verdict": "NORMAL",
+    "latency_ms": 142.3
+  },
+  {
+    "timestamp": "2026-11-21 14:00:41",
+    "filename": "002.png",
+    "model": "CAE",
+    "category": "leather",
+    "score": 0.33762,
+    "threshold": 0.30781,
+    "verdict": "DEFECT",
+    "latency_ms": 104.9
+  },
+  {
+    "timestamp": "2026-11-21 14:00:33",
+    "filename": "002.png",
+    "model": "DRAEM",
+    "category": "leather",
+    "score": 0.38094,
+    "threshold": 0.3318,
+    "verdict": "DEFECT",
+    "latency_ms": 225.4
+  },
+  {
+    "timestamp": "2026-11-21 14:00:18",
+    "filename": "002.png",
+    "model": "EFFICIENTAD",
+    "category": "leather",
+    "score": 1.65948,
+    "threshold": 0.23828,
+    "verdict": "DEFECT",
+    "latency_ms": 937.75
+  },
+  {
+    "timestamp": "2026-11-21 14:00:07",
+    "filename": "002.png",
+    "model": "CAE",
+    "category": "leather",
+    "score": 0.33762,
+    "threshold": 0.30781,
+    "verdict": "DEFECT",
+    "latency_ms": 201.1
+  },
+  {
+    "timestamp": "2026-11-21 13:59:50",
+    "filename": "002.png",
+    "model": "PATCHCORE",
+    "category": "leather",
+    "score": 24.46859,
+    "threshold": 10.40549,
+    "verdict": "DEFECT",
+    "latency_ms": 3887.44
+  },
+  {
+    "timestamp": "2026-11-21 07:01:00",
+    "filename": "trans_000.png",
+    "model": "EFFICIENTAD",
+    "category": "transistor",
+    "score": 2.32949,
+    "threshold": 0.4939,
+    "verdict": "DEFECT",
+    "latency_ms": 766.62
+  },
+  {
+    "timestamp": "2026-11-21 07:00:59",
+    "filename": "trans_000.png",
+    "model": "CAE",
+    "category": "transistor",
+    "score": 0.33447,
+    "threshold": 0.28902,
+    "verdict": "DEFECT",
+    "latency_ms": 120.6
+  },
+  {
+    "timestamp": "2026-11-21 07:00:37",
+    "filename": "good_000.png",
+    "model": "PATCHCORE",
+    "category": "leather",
+    "score": 10.07552,
+    "threshold": 10.40549,
+    "verdict": "NORMAL",
+    "latency_ms": 97.54
+  },
+  {
+    "timestamp": "2026-11-21 07:00:37",
+    "filename": "cut_000.png",
+    "model": "PATCHCORE",
+    "category": "leather",
+    "score": 20.06211,
+    "threshold": 10.40549,
+    "verdict": "DEFECT",
+    "latency_ms": 2630.25
+  }
+]

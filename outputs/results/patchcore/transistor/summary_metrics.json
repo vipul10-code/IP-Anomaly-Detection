@@ -1,0 +1,55 @@
+{
+  "model": "patchcore",
+  "category": "transistor",
+  "n_test_images": 100,
+  "hyperparameters": {
+    "gaussian_sigma": 4.0,
+    "top_k_frac": 0.02,
+    "val_percentile": 99.0,
+    "val_ratio": 0.2
+  },
+  "image_level_roc_auc": 0.9979166666666667,
+  "image_level_average_precision": 0.9968856034316561,
+  "pixel_level_roc_auc": 0.9389796583003658,
+  "pixel_level_aupro": 0.8668771856540455,
+  "validation_threshold": 13.769362392425535,
+  "precision": 0.851063829787234,
+  "recall": 1.0,
+  "f1_score": 0.9195402298850575,
+  "confusion_matrix": {
+    "labels": [
+      "normal",
+      "anomalous"
+    ],
+    "matrix": [
+      [
+        53,
+        7
+      ],
+      [
+        0,
+        40
+      ]
+    ]
+  },
+  "oracle_threshold": 14.23033332824707,
+  "oracle_precision": 0.9523809523809523,
+  "oracle_recall": 1.0,
+  "oracle_f1_score": 0.975609756097561,
+  "oracle_confusion_matrix": {
+    "labels": [
+      "normal",
+      "anomalous"
+    ],
+    "matrix": [
+      [
+        58,
+        2
+      ],
+      [
+        0,
+        40
+      ]
+    ]
+  }
+}

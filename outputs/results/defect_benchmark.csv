@@ -1,0 +1,40 @@
+model      , category  , defect_type , n_images, detection_rate
+CAE        , leather   , color       ,       19, 1.0
+CAE        , leather   , cut         ,       19, 0.8421052631578947
+CAE        , leather   , fold        ,       17, 1.0
+CAE        , leather   , glue        ,       19, 0.7894736842105263
+CAE        , leather   , good        ,       32, 0.03125
+CAE        , leather   , poke        ,       18, 1.0
+CAE        , transistor, bent_lead   ,       10, 0.5
+CAE        , transistor, cut_lead    ,       10, 0.3
+CAE        , transistor, damaged_case,       10, 0.0
+CAE        , transistor, good        ,       60, 0.8166666666666667
+CAE        , transistor, misplaced   ,       10, 0.8
+PATCHCORE  , leather   , color       ,       19, 1.0
+PATCHCORE  , leather   , cut         ,       19, 1.0
+PATCHCORE  , leather   , fold        ,       17, 1.0
+PATCHCORE  , leather   , glue        ,       19, 1.0
+PATCHCORE  , leather   , good        ,       32, 0.59375
+PATCHCORE  , leather   , poke        ,       18, 1.0
+PATCHCORE  , transistor, bent_lead   ,       10, 1.0
+PATCHCORE  , transistor, cut_lead    ,       10, 1.0
+PATCHCORE  , transistor, damaged_case,       10, 1.0
+PATCHCORE  , transistor, good        ,       60, 0.8833333333333333
+PATCHCORE  , transistor, misplaced   ,       10, 1.0
+EFFICIENTAD, leather   , color       ,       19, 0.9473684210526316
+EFFICIENTAD, leather   , cut         ,       19, 0.9473684210526316
+EFFICIENTAD, leather   , fold        ,       17, 1.0
+EFFICIENTAD, leather   , glue        ,       19, 0.9473684210526316
+EFFICIENTAD, leather   , good        ,       32, 0.125
+EFFICIENTAD, leather   , poke        ,       18, 1.0
+EFFICIENTAD, transistor, bent_lead   ,       10, 0.4
+EFFICIENTAD, transistor, cut_lead    ,       10, 0.0
+EFFICIENTAD, transistor, damaged_case,       10, 0.0
+EFFICIENTAD, transistor, good        ,       60, 1.0
+EFFICIENTAD, transistor, misplaced   ,       10, 0.7
+DRAEM      , leather   , color       ,       19, 0.2631578947368421
+DRAEM      , leather   , cut         ,       19, 1.0
+DRAEM      , leather   , fold        ,       17, 0.9411764705882352
+DRAEM      , leather   , glue        ,       19, 0.6842105263157895
+DRAEM      , leather   , good        ,       32, 0.875
+DRAEM      , leather   , poke        ,       18, 0.8888888888888888

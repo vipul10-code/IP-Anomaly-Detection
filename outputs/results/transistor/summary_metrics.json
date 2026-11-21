@@ -1,0 +1,56 @@
+{
+  "model": "cae",
+  "category": "transistor",
+  "n_test_images": 100,
+  "hyperparameters": {
+    "gaussian_sigma": 4.0,
+    "top_k_frac": 0.02,
+    "val_percentile": 99.0,
+    "val_ratio": 0.2
+  },
+  "image_level_roc_auc": 0.6391666666666667,
+  "image_level_average_precision": 0.6567756977202127,
+  "pixel_level_roc_auc": 0.7783500630948308,
+  "pixel_level_aupro": 0.5989832012826517,
+  "validation_threshold": 0.2890228080749511,
+  "precision": 0.5925925925925926,
+  "recall": 0.4,
+  "f1_score": 0.47761194029850745,
+  "confusion_matrix": {
+    "labels": [
+      "normal",
+      "anomalous"
+    ],
+    "matrix": [
+      [
+        49,
+        11
+      ],
+      [
+        24,
+        16
+      ]
+    ]
+  },
+  "oracle_threshold": 0.31163838505744934,
+  "oracle_precision": 1.0,
+  "oracle_recall": 0.325,
+  "oracle_f1_score": 0.49056603773584906,
+  "oracle_confusion_matrix": {
+    "labels": [
+      "normal",
+      "anomalous"
+    ],
+    "matrix": [
+      [
+        60,
+        0
+      ],
+      [
+        27,
+        13
+      ]
+    ]
+  },
+  "decision_threshold": 0.2890228080749511
+}

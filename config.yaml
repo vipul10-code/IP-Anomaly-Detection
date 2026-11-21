@@ -1,0 +1,51 @@
+# Configuration for the CNN Autoencoder Anomaly Detection Pipeline
+# MVTec AD - Leather & Transistor categories
+
+data:
+  root_dir: "./data/mvtec"        # expects ./data/mvtec/leather and ./data/mvtec/transistor
+  categories: ["leather", "transistor"]
+  img_size: 256                   # input resolution (H = W = img_size)
+  channels: 3                     # RGB
+  batch_size: 16
+  num_workers: 2
+  # Augmentations applied ONLY to normal ("good") training images.
+  # Rotational/flip augmentation is safe for texture classes (leather)
+  # but should be disabled for rigid, oriented objects (transistor).
+  augment:
+    leather:
+      flip: true
+      rotate: true
+      color_jitter: true
+    transistor:
+      flip: false
+      rotate: false
+      color_jitter: false
+
+model:
+  latent_channels: 100            # bottleneck depth of the autoencoder
+  base_channels: 32               # first conv layer width, doubles each downsample
+
+train:
+  epochs: 100
+  lr: 0.0002
+  weight_decay: 0.00001
+  ssim_weight: 0.6                # combined loss = ssim_weight * (1-SSIM) + (1-ssim_weight) * MSE
+  early_stop_patience: 15
+  checkpoint_dir: "./outputs/checkpoints"
+  log_dir: "./outputs/logs"
+  device: "cuda"                  # falls back to "cpu" automatically if no GPU is found
+  seed: 42
+
+evaluate:
+  results_dir: "./outputs/results"
+  heatmap_colormap: "jet"
+  overlay_alpha: 0.45
+  # anomaly threshold strategy: "validation" (zero-leakage 99th percentile of normal validation scores)
+  threshold_strategy: "validation"
+  val_ratio: 0.2
+  val_percentile: 99.0
+  gaussian_sigma: 4.0
+  top_k_frac:
+    leather: 0.005
+    transistor: 0.02
+  n_visual_samples_per_class: 6   # how many example heatmaps to save per defect type

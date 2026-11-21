@@ -1,0 +1,97 @@
+"""
+run_efficientad.py
+------------------
+Training and evaluation runner for EfficientAD.
+Uses the shared zero-leakage evaluation layer (src/evaluator.py).
+
+Usage:
+    python -m src.run_efficientad --category leather --mode all --epochs 15
+    python -m src.run_efficientad --category transistor --mode all --epochs 15
+"""
+
+import argparse
+import time
+from pathlib import Path
+import yaml
+import torch
+from torch.utils.data import DataLoader
+
+from src.dataset import MVTecDataset
+from src.models.efficientad import EfficientAD
+from src.evaluator import evaluate_model
+from src.utils import get_device, set_seed
+
+
+def run_efficientad(cfg: dict, category: str, mode: str = "all", epochs: int = 15, lr: float = 1e-3):
+    set_seed(cfg.get("train", {}).get("seed", 42))
+    device = get_device(cfg.get("train", {}).get("device", "cuda"))
+    d_cfg = cfg["data"]
+    ckpt_dir = Path(cfg.get("train", {}).get("checkpoint_dir", "./outputs/checkpoints"))
+    ckpt_path = ckpt_dir / f"efficientad_{category}.pt"
+
+    model = EfficientAD(feature_dim=128, device=device)
+
+    if mode in ("train", "all") or not ckpt_path.exists():
+        train_ds = MVTecDataset(
+            root_dir=d_cfg["root_dir"],
+            category=category,
+            split="train",
+            img_size=d_cfg.get("img_size", 256),
+        )
+        train_loader = DataLoader(
+            train_ds,
+            batch_size=d_cfg.get("batch_size", 16),
+            shuffle=True,
+            num_workers=0,
+        )
+
+        params = list(model.student.parameters()) + list(model.autoencoder.parameters())
+        optimizer = torch.optim.Adam(params, lr=lr, weight_decay=1e-5)
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
+
+        print(f"[EfficientAD][{category}] Training for {epochs} epochs...")
+        for ep in range(1, epochs + 1):
+            t0 = time.time()
+            running_loss = 0.0
+            n_batches = 0
+            for batch in train_loader:
+                loss_dict = model.train_step(batch, optimizer)
+                running_loss += loss_dict["total_loss"]
+                n_batches += 1
+            scheduler.step()
+            avg_loss = running_loss / max(1, n_batches)
+            print(f"[EfficientAD][{category}] Epoch {ep:02d}/{epochs:02d} - Loss: {avg_loss:.4f} ({time.time() - t0:.1f}s)")
+
+        model.save_checkpoint(str(ckpt_path), extra_meta={"category": category, "epochs": epochs})
+    else:
+        model.load_checkpoint(str(ckpt_path))
+
+    if mode in ("evaluate", "all"):
+        print(f"\n[EfficientAD][{category}] Running shared zero-leakage evaluation...")
+        summary = evaluate_model(
+            model_name="efficientad",
+            category=category,
+            cfg=cfg,
+            predict_fn=model.predict,
+            device=device,
+        )
+        return summary
+
+
+def main():
+    parser = argparse.ArgumentParser(description="EfficientAD MVTec AD Runner")
+    parser.add_argument("--category", required=True, choices=["leather", "transistor"])
+    parser.add_argument("--mode", default="all", choices=["train", "evaluate", "all"])
+    parser.add_argument("--config", default="config.yaml")
+    parser.add_argument("--epochs", type=int, default=15)
+    parser.add_argument("--lr", type=float, default=1e-3)
+    args = parser.parse_args()
+
+    with open(args.config) as f:
+        cfg = yaml.safe_load(f)
+
+    run_efficientad(cfg, args.category, mode=args.mode, epochs=args.epochs, lr=args.lr)
+
+
+if __name__ == "__main__":
+    main()

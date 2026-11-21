@@ -1,0 +1,55 @@
+{
+  "model": "cae",
+  "category": "leather",
+  "n_test_images": 124,
+  "hyperparameters": {
+    "gaussian_sigma": 4.0,
+    "top_k_frac": 0.005,
+    "val_percentile": 99.0,
+    "val_ratio": 0.2
+  },
+  "image_level_roc_auc": 0.7873641304347826,
+  "image_level_average_precision": 0.9250427572586096,
+  "pixel_level_roc_auc": 0.8458263388768057,
+  "pixel_level_aupro": 0.7174243514100017,
+  "validation_threshold": 0.307813001871109,
+  "precision": 0.7327586206896551,
+  "recall": 0.9239130434782609,
+  "f1_score": 0.8173076923076923,
+  "confusion_matrix": {
+    "labels": [
+      "normal",
+      "anomalous"
+    ],
+    "matrix": [
+      [
+        1,
+        31
+      ],
+      [
+        7,
+        85
+      ]
+    ]
+  },
+  "oracle_threshold": 0.34328970313072205,
+  "oracle_precision": 0.9166666666666666,
+  "oracle_recall": 0.717391304347826,
+  "oracle_f1_score": 0.8048780487804879,
+  "oracle_confusion_matrix": {
+    "labels": [
+      "normal",
+      "anomalous"
+    ],
+    "matrix": [
+      [
+        26,
+        6
+      ],
+      [
+        26,
+        66
+      ]
+    ]
+  }
+}

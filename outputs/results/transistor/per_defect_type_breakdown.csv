@@ -1,0 +1,6 @@
+defect_type,n_images,mean_anomaly_score,detection_rate_val_th,detection_rate_oracle_th
+bent_lead,10,0.29694920778274536,0.5,0.4
+cut_lead,10,0.27079343795776367,0.3,0.1
+damaged_case,10,0.26599472761154175,0.0,0.0
+good,60,0.26981914043426514,0.8166666666666667,1.0
+misplaced,10,0.301780641078949,0.8,0.8
