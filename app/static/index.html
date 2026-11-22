@@ -1,341 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QualityGuard — Visual Anomaly & Defect Detection</title>
-  <link rel="stylesheet" href="/static/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QualityGuard — Surface inspection bench</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <div class="app-container">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-          </svg>
-        </div>
-        <div>
-          <h2>QualityGuard</h2>
-          <span class="subtext">MVTec AD Inspector</span>
-        </div>
-      </div>
-
-      <nav class="nav-menu">
-        <button class="nav-item active" data-tab="overview">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-          Overview & Benchmark
-        </button>
-        <button class="nav-item" data-tab="inspection">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          Live Inspection
-        </button>
-        <button class="nav-item" data-tab="defects">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-          Defect Breakdown
-        </button>
-        <button class="nav-item" data-tab="gallery">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          Heatmap Gallery
-        </button>
-        <button class="nav-item" data-tab="history">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Inspection History
-        </button>
-      </nav>
-
-      <div class="system-status-box">
-        <div class="status-indicator online"></div>
-        <div>
-          <div class="status-title">Runtime Ready</div>
-          <div class="status-desc" id="deviceStatus">PyTorch • CPU/CUDA</div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="main-content">
-      <!-- Section 1: Overview & Benchmark -->
-      <section id="overview" class="content-section active">
-        <div class="section-header">
-          <div>
-            <h1>Benchmark & Model Matrix</h1>
-            <p class="section-subtitle">Zero-leakage cross-architecture comparison on MVTec AD datasets.</p>
-          </div>
-          <button class="btn btn-secondary" onclick="loadBenchmark()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/></svg>
-            Refresh Metrics
-          </button>
-        </div>
-
-        <div class="grid-2col">
-          <div class="card">
-            <div class="card-header">
-              <h3>Image AUROC Comparison</h3>
-            </div>
-            <div class="chart-container">
-              <canvas id="chartImageAuroc"></canvas>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <h3>Pixel Localization (AUROC & AUPRO)</h3>
-            </div>
-            <div class="chart-container">
-              <canvas id="chartPixelAuroc"></canvas>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="card-header">
-            <h3>Standardized Performance Matrix</h3>
-            <span class="badge badge-accent">Highest Values Highlighted</span>
-          </div>
-          <div class="table-responsive">
-            <table class="data-table" id="benchmarkTable">
-              <thead>
-                <tr>
-                  <th>Model</th>
-                  <th>Category</th>
-                  <th>Image AUROC</th>
-                  <th>Image AP</th>
-                  <th>Pixel AUROC</th>
-                  <th>Pixel AUPRO</th>
-                  <th>Val F1 (99%)</th>
-                  <th>Oracle F1</th>
-                  <th>Latency</th>
-                  <th>Size</th>
-                </tr>
-              </thead>
-              <tbody id="benchmarkTableBody">
-                <tr><td colspan="10" class="text-center">Loading benchmark data...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 2: Live Inspection -->
-      <section id="inspection" class="content-section">
-        <div class="section-header">
-          <div>
-            <h1>Real-Time Defect Inspection</h1>
-            <p class="section-subtitle">Upload a sample image to generate reconstruction, heatmap overlay, and anomaly decision.</p>
-          </div>
-        </div>
-
-        <div class="grid-layout inspection-layout">
-          <div class="control-panel card">
-            <h3>Inspection Settings</h3>
-            <div class="form-group">
-              <label for="modelSelect">Detection Architecture</label>
-              <select id="modelSelect" class="form-control">
-                <option value="patchcore" selected>PatchCore (WideResNet-50) [Recommended]</option>
-                <option value="efficientad">EfficientAD (Teacher-Student)</option>
-                <option value="cae">Convolutional Autoencoder (v1 Baseline)</option>
-                <option value="draem">DRAEM (Synthetic Embedding - Leather)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="categorySelect">Inspection Category</label>
-              <select id="categorySelect" class="form-control">
-                <option value="leather" selected>Leather (Texture Surface)</option>
-                <option value="transistor">Transistor (Rigid Assembly)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Input Part Image</label>
-              <div class="drop-zone" id="dropZone">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-                <p>Drag & drop image here or <strong>browse</strong></p>
-                <span class="file-info" id="fileName">Supports PNG, JPG, JPEG</span>
-                <input type="file" id="fileInput" accept="image/*" style="display: none;">
-              </div>
-            </div>
-
-            <div class="sample-loader">
-              <label>Or load an MVTec test sample:</label>
-              <div class="button-group">
-                <button class="btn btn-sm" onclick="loadSampleImage('leather_cut')">Leather Cut</button>
-                <button class="btn btn-sm" onclick="loadSampleImage('leather_good')">Leather Normal</button>
-                <button class="btn btn-sm" onclick="loadSampleImage('transistor_bent')">Transistor Bent Lead</button>
-                <button class="btn btn-sm" onclick="loadSampleImage('transistor_good')">Transistor Normal</button>
-              </div>
-            </div>
-
-            <button id="inspectBtn" class="btn btn-primary btn-block mt-3" onclick="runInspection()" disabled>
-              Run Defect Inspection
-            </button>
-          </div>
-
-          <div class="results-panel card">
-            <div class="results-header">
-              <h3>Diagnostic Results</h3>
-              <div id="verdictBadge" class="badge badge-neutral">Awaiting Inspection</div>
-            </div>
-
-            <div class="metrics-strip">
-              <div class="metric-card">
-                <div class="metric-label">Anomaly Score</div>
-                <div class="metric-value" id="scoreDisplay">—</div>
-              </div>
-              <div class="metric-card">
-                <div class="metric-label">Validation Threshold</div>
-                <div class="metric-value" id="thresholdDisplay">—</div>
-              </div>
-              <div class="metric-card">
-                <div class="metric-label">Inference Latency</div>
-                <div class="metric-value" id="latencyDisplay">—</div>
-              </div>
-            </div>
-
-            <!-- Side by side preview -->
-            <div class="inspection-views">
-              <div class="view-item">
-                <div class="view-title">Original Part</div>
-                <div class="img-frame">
-                  <img id="imgOriginal" src="" alt="Original part">
-                  <span class="placeholder-text">Upload an image</span>
-                </div>
-              </div>
-              <div class="view-item">
-                <div class="view-title">Anomaly Heatmap Overlay</div>
-                <div class="img-frame">
-                  <img id="imgOverlay" src="" alt="Heatmap overlay">
-                  <span class="placeholder-text">Heatmap will appear here</span>
-                </div>
-              </div>
-              <div class="view-item">
-                <div class="view-title">Predicted Defect Mask</div>
-                <div class="img-frame">
-                  <img id="imgMask" src="" alt="Predicted mask">
-                  <span class="placeholder-text">Segmentation mask</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 3: Per-Defect Breakdown -->
-      <section id="defects" class="content-section">
-        <div class="section-header">
-          <div>
-            <h1>Per-Defect-Type Breakdown</h1>
-            <p class="section-subtitle">Detailed sensitivity analysis per manufacturing error type (cuts, folds, damaged cases, misplaced leads).</p>
-          </div>
-          <div class="filter-controls">
-            <select id="defectCategoryFilter" class="form-control" onchange="renderDefectBreakdown()">
-              <option value="all">All Categories</option>
-              <option value="leather">Leather</option>
-              <option value="transistor">Transistor</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
-            <h3>Defect Detection Rates by Model (%)</h3>
-          </div>
-          <div class="chart-container tall">
-            <canvas id="chartDefectRates"></canvas>
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="card-header">
-            <h3>Defect Detection Breakdown Table</h3>
-          </div>
-          <div class="table-responsive">
-            <table class="data-table" id="defectTable">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Defect Type</th>
-                  <th>Images</th>
-                  <th>CAE (v1)</th>
-                  <th>EfficientAD</th>
-                  <th>PatchCore</th>
-                  <th>DRAEM</th>
-                </tr>
-              </thead>
-              <tbody id="defectTableBody">
-                <tr><td colspan="7" class="text-center">Loading defect data...</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section 4: Heatmap Gallery -->
-      <section id="gallery" class="content-section">
-        <div class="section-header">
-          <div>
-            <h1>Qualitative Heatmap Gallery</h1>
-            <p class="section-subtitle">Visual inspection panels: Original | Reconstruction / Heatmap Overlay | Ground Truth Mask.</p>
-          </div>
-          <div class="filter-controls">
-            <select id="galleryModelSelect" class="form-control" onchange="loadGallery()">
-              <option value="patchcore">PatchCore</option>
-              <option value="efficientad">EfficientAD</option>
-              <option value="cae">CAE</option>
-              <option value="draem">DRAEM</option>
-            </select>
-            <select id="galleryCatSelect" class="form-control" onchange="loadGallery()">
-              <option value="leather">Leather</option>
-              <option value="transistor">Transistor</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="gallery-grid" id="galleryGrid">
-          <div class="text-center w-full">Loading gallery panels...</div>
-        </div>
-      </section>
-
-      <!-- Section 5: Inspection History -->
-      <section id="history" class="content-section">
-        <div class="section-header">
-          <div>
-            <h1>Production Line Inspection Log</h1>
-            <p class="section-subtitle">Audit trail of inspected parts, anomaly scores, and verdicts.</p>
-          </div>
-          <button class="btn btn-secondary" onclick="exportHistoryCSV()">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-            Export CSV Log
-          </button>
-        </div>
-
-        <div class="card">
-          <div class="table-responsive">
-            <table class="data-table" id="historyTable">
-              <thead>
-                <tr>
-                  <th>Timestamp</th>
-                  <th>Part Image</th>
-                  <th>Category</th>
-                  <th>Model</th>
-                  <th>Score</th>
-                  <th>Threshold</th>
-                  <th>Latency</th>
-                  <th>Verdict</th>
-                </tr>
-              </thead>
-              <tbody id="historyTableBody">
-                <tr><td colspan="8" class="text-center">No inspections recorded yet.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-    </main>
+<header class="bar">
+  <div class="brand">
+    <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M18.5 18.5 25 25" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M8 13l3 3 5-6" fill="none" stroke="var(--brass)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>QualityGuard</span>
   </div>
+  <nav class="tabs" role="tablist">
+    <button class="tab on" data-tab="overview">Benchmark</button>
+    <button class="tab" data-tab="inspect">Inspect a part</button>
+    <button class="tab" data-tab="defects">Defect types</button>
+    <button class="tab" data-tab="gallery">Heatmaps</button>
+    <button class="tab" data-tab="history">Log</button>
+  </nav>
+  <div class="status" id="status">Checking models…</div>
+</header>
 
-  <script src="/static/app.js"></script>
+<main>
+  <section id="overview" class="view on">
+    <div class="lede">
+      <h1 id="headline">Loading results…</h1>
+      <p id="subline" class="sub"></p>
+    </div>
+    <div class="seg" id="metricSeg" aria-label="Ranking metric"></div>
+    <div class="boards" id="boards"></div>
+    <h2>Full matrix</h2>
+    <div class="scroll"><table class="tbl" id="matrix"></table></div>
+  </section>
+
+  <section id="inspect" class="view">
+    <div class="bench">
+      <aside class="panel">
+        <h2>Model</h2>
+        <div class="seg" id="catSeg"></div>
+        <div class="models" id="modelList"></div>
+        <h2>Part image</h2>
+        <div class="drop" id="drop" tabindex="0">
+          <b>Drop an image</b> or click to choose
+          <small id="fileName">PNG or JPG</small>
+          <input type="file" id="file" accept="image/*" hidden>
+        </div>
+        <div class="samples" id="samples"></div>
+        <button class="go" id="go" disabled>Inspect part</button>
+      </aside>
+
+      <div class="stage">
+        <div class="seg" id="viewSeg"></div>
+        <div class="frame" id="frame">
+          <img id="shot" alt="" hidden>
+          <p class="empty" id="empty">Choose a model and add an image. The heatmap, mask and verdict appear here.</p>
+          <div class="stamp" id="stamp" hidden></div>
+        </div>
+        <div class="ruler" id="ruler" hidden>
+          <div class="ruler-head"><span>Anomaly score</span><b id="scoreTxt"></b></div>
+          <div class="track"><i class="over" id="over"></i><i class="tick" id="tick"></i><i class="mark" id="mark"></i></div>
+          <div class="ruler-foot"><span id="thrTxt"></span><span id="statTxt"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="defects" class="view">
+    <div class="lede"><h1>Which defects slip through?</h1>
+      <p class="sub">Share of test images flagged at each model’s validation threshold. Normal parts show false alarms instead, so lower is better there.</p></div>
+    <div class="seg" id="defCat"></div>
+    <div class="scroll"><table class="tbl heat" id="heat"></table></div>
+  </section>
+
+  <section id="gallery" class="view">
+    <div class="lede"><h1>Heatmap panels</h1><p class="sub">Original, heatmap overlay and ground-truth mask for saved test images.</p></div>
+    <div class="row"><div class="seg" id="gModel"></div><div class="seg" id="gCat"></div></div>
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="history" class="view">
+    <div class="lede row between"><div><h1>Inspection log</h1><p class="sub" id="histSum"></p></div>
+      <button class="ghost" id="exportBtn">Download CSV</button></div>
+    <div class="scroll"><table class="tbl" id="histTbl"></table></div>
+  </section>
+</main>
+<script src="/static/app.js"></script>
 </body>
 </html>

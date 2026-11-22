@@ -374,6 +374,11 @@ def get_inspection_history():
     return []
 
 
+# Serve MVTec sample images so the dashboard's "try a test image" buttons work
+DATA_DIR = PROJECT_ROOT / "data"
+if DATA_DIR.exists():
+    app.mount("/data", StaticFiles(directory=str(DATA_DIR)), name="data")
+
 # Mount static frontend
 if STATIC_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
